@@ -10,6 +10,10 @@ dailyForecast = ""
 isDaytime = False
 
 def hourly_api_req():
+    """
+    This is the api request that is to be run hourly
+    Updates hourNumber, hourlyTemp, and hourlyIcons
+    """
     response = requests.get("https://api.weather.gov/gridpoints/BUF/74,60/forecast/hourly")
     json = response.json()
     properties = json["properties"]["periods"]
@@ -27,6 +31,10 @@ def hourly_api_req():
         hourlyIcons.append(properties[i]["icon"])
         
 def daily_api_req():
+    """
+    This is the api request that is to be run (semi)daily
+    Updates dailyForecast and isDaytime 
+    """
     response = requests.get("https://api.weather.gov/gridpoints/BUF/74,60/forecast/")
     json = response.json()
     properties = json["properties"]["periods"]
@@ -36,6 +44,9 @@ def daily_api_req():
 
 
 def test_api_pull(link:str):
+    """
+    Used to test if a api request is successful
+    """
     response = requests.get(link)
     print("\nStatus code = " +str(response.status_code))
     print("\n\nContent = "+ str(response.content))
