@@ -55,34 +55,9 @@ def jprint(obj):
     # create a formatted string of the Python JSON object
     text = json.dumps(obj, sort_keys=True, indent=4)
     print(text)
-    
-def cli():
+
+def dateTime_interpreter(Time):
     """
-    A command line interface for the weather api
-    Displays the daily forcast, 5 hours of weather and the current wind
+    Takes a date and time in YYYY-MM-DDTHH:MM:SS-HH:MM and converts it to a more readable date and time
     """
-    hourNumber = []
-    hourlyTemp = []
-    hourTime=[]
-    wind = "uhhh"
-    hourlyIcons= []
-    dailyForecast = "uhhh"
-    isDaytime = False
-
-    wind,hourNumber, hourlyTemp, hourlyIcons, hourTime = hourly_api_req(wind,hourNumber,hourlyTemp,hourlyIcons,hourTime)
-    dailyForecast, isDaytime = daily_api_req(dailyForecast,isDaytime)
-    print("Daily Forecast: \n"+ dailyForecast+ "\n")
-
-    for n in hourNumber:
-        print("Hour: "+ str(hourTime[n-1])+ "\n")
-        print("Temp: "+ str(hourlyTemp[n-1])+ "\n")
-    
-    print("Wind: "+wind)
-        
-    input("Press enter to end")
-    
-
-def main():
-    cli()
-
-main()
+    #TODO
