@@ -2,6 +2,16 @@ from tokenize import String
 import requests
 import json
 
+hourNumber = []
+hourlyTemp = []
+wind = ""
+shortForecast = ""
+hourlyIcons= []
+dailyForecast = ""
+isDaytime = False
+
+
+
 def test_api_pull(link:str):
     response = requests.get(link)
     print("\nStatus code = " +str(response.status_code))
@@ -20,7 +30,14 @@ def main():
     response = requests.get("https://api.weather.gov/gridpoints/BUF/74,60/forecast/hourly")
     json = response.json()
     properties = json["properties"]["periods"]
+    hours = []
+    
+    for i in properties:
+        hour = i["number"]
+        hours.append(hour)
+        
 
-    jprint(properties)
+    #jprint(properties)
+    print (hours)
 
 main()
