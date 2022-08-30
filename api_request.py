@@ -5,7 +5,6 @@ import json
 hourNumber = []
 hourlyTemp = []
 wind = ""
-detailedForecast = ""
 hourlyIcons= []
 dailyForecast = ""
 isDaytime = False
