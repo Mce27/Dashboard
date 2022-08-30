@@ -5,11 +5,28 @@ import json
 hourNumber = []
 hourlyTemp = []
 wind = ""
-shortForecast = ""
+detailedForecast = ""
 hourlyIcons= []
 dailyForecast = ""
 isDaytime = False
 
+def hourly_api_req():
+    response = requests.get("https://api.weather.gov/gridpoints/BUF/74,60/forecast/hourly")
+    json = response.json()
+    properties = json["properties"]["periods"]
+
+    wind = properties[0]["windSpeed"]
+
+    hourNumber.clear()
+    hourlyTemp.clear()
+    hourlyIcons.clear()
+
+    for i in range(0,5):
+        hour = properties[i]["number"]
+        hourNumber.append(hour)
+        hourlyTemp.append(properties[i]["temperature"])
+        hourlyIcons.append(properties[i]["icon"])
+        
 
 
 def test_api_pull(link:str):
