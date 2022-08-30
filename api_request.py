@@ -79,7 +79,7 @@ def cli():
     
     print("Wind: "+wind)
         
-
+    input("Press enter to end")
     
 
 def main():
