@@ -60,10 +60,16 @@ def dateTime_interpreter(Time:str):
     """
     Takes a date and time in YYYY-MM-DDTHH:MM:SS-HH:MM and converts it to a more readable date and time
     """
-    output = 0
-    output += int(Time[11]+Time[12])
-    
-    if output > 12:
-        output = output-12
+    tim = int(Time[11]+Time[12])
+    output = ""
+    if tim > 12:
+        tim = tim-12
+        output = str(tim) + "pm"
+    else:
+        if tim == 12:
+            output = str(tim) + "pm"
+        else:
+            output = str(tim) + "am"
+
     
     return output
