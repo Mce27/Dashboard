@@ -26,6 +26,13 @@ def hourly_api_req():
         hourlyTemp.append(properties[i]["temperature"])
         hourlyIcons.append(properties[i]["icon"])
         
+def daily_api_req():
+    response = requests.get("https://api.weather.gov/gridpoints/BUF/74,60/forecast/")
+    json = response.json()
+    properties = json["properties"]["periods"]
+
+    dailyForecast = properties[0]["detailedForecast"]
+    isDaytime = properties[0]["isDaytime"]
 
 
 def test_api_pull(link:str):
