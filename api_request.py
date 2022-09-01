@@ -6,7 +6,7 @@ import json
 def hourly_api_req(wind,hourNumber,hourlyTemp,hourlyIcons,hourTime):
     """
     This is the api request that is to be run hourly
-    Updates hourNumber, hourlyTemp, and hourlyIcons
+    Updates wind,hourNumber, hourlyTemp, and hourlyIcons
     """
     response = requests.get("https://api.weather.gov/gridpoints/BUF/74,60/forecast/hourly")
     json = response.json()
