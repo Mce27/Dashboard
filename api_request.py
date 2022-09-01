@@ -24,7 +24,7 @@ def hourly_api_req(wind,hourNumber,hourlyTemp,hourlyIcons,hourTime):
         hourNumber.append(hour)
         hourlyTemp.append(properties[i]["temperature"])
         hourlyIcons.append(properties[i]["icon"])
-        hourTime.append(properties[i]["startTime"])
+        hourTime.append((dateTime_interpreter(properties[i]["startTime"])))
     
     return wind,hourNumber,hourlyTemp,hourlyIcons,hourTime
         
@@ -56,8 +56,20 @@ def jprint(obj):
     text = json.dumps(obj, sort_keys=True, indent=4)
     print(text)
 
-def dateTime_interpreter(Time):
+def dateTime_interpreter(Time:str):
     """
     Takes a date and time in YYYY-MM-DDTHH:MM:SS-HH:MM and converts it to a more readable date and time
     """
-    #TODO
+    tim = int(Time[11]+Time[12])
+    output = ""
+    if tim > 12:
+        tim = tim-12
+        output = str(tim) + "pm"
+    else:
+        if tim == 12:
+            output = str(tim) + "pm"
+        else:
+            output = str(tim) + "am"
+
+    
+    return output
