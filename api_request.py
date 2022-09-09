@@ -1,5 +1,6 @@
 import requests
 import json
+import shutil
 
 
 
@@ -27,7 +28,25 @@ def hourly_api_req(wind,hourNumber,hourlyTemp,hourlyIcons,hourTime):
         hourTime.append((dateTime_interpreter(properties[i]["startTime"])))
     
     return wind,hourNumber,hourlyTemp,hourlyIcons,hourTime
+
+def photoDown(hourlyIcons):
+    """
+    Goes through the urls in the list and return a list with the image paths
+    Downloads to local storage
+    """
+    i = 0
+    hourlyImgPath = []
+    for url in hourlyIcons:
+        img = requests.get(url,stream=True)
         
+        img.raw.decode_content = True
+        
+        with open("./icons/"+str(i),'wb') as f:
+            shutil.copyfileobj(img.raw,f)
+        hourlyImgPath.append("./icons/"+str(i))
+        i+=1
+    return hourlyImgPath
+
 def daily_api_req(dailyForecast,isDaytime):
     """
     This is the api request that is to be run (semi)daily
