@@ -11,6 +11,7 @@ hourlyIcons= []
 dailyForecast = "uhhh"
 isDaytime = False
 hourlyImg = []
+date=""
 
 def infoUpdate():
     global hourNumber 
@@ -21,7 +22,8 @@ def infoUpdate():
     global hourlyImg
     global dailyForecast 
     global isDaytime
-    wind,hourNumber,hourlyTemp,hourlyIcons,hourTime=hourly_api_req(wind,hourNumber,hourlyTemp,hourlyIcons,hourTime)
+    global date
+    wind,hourNumber,hourlyTemp,hourlyIcons,hourTime,date=hourly_api_req(wind,hourNumber,hourlyTemp,hourlyIcons,hourTime)
     hourlyImgPath = photoDown(hourlyIcons)
     for path in hourlyImgPath:
         hourlyImg.append(tkinter.PhotoImage(file=path))
@@ -51,7 +53,8 @@ def gui():
     frm.grid()
     hourfrm = ttk.Frame(root,padding="10")
     hourfrm.grid()
-    ttk.Label(frm,text=dailyForecast).grid(column=0, row=0)
+    ttk.Label(frm,text=date).grid(column=0,row=0)
+    ttk.Label(frm,text=dailyForecast).grid(column=0, row=1)
     for hour in hourNumber:
         ttk.Label(hourfrm,image=hourlyImg[hour-1]).grid(column=hour-1,row=2)
         ttk.Label(hourfrm,text=hourTime[hour-1]).grid(column=hour-1,row=1)

@@ -25,9 +25,11 @@ def hourly_api_req(wind,hourNumber,hourlyTemp,hourlyIcons,hourTime):
         hourNumber.append(hour)
         hourlyTemp.append(properties[i]["temperature"])
         hourlyIcons.append(properties[i]["icon"])
-        hourTime.append((dateTime_interpreter(properties[i]["startTime"])))
+        time,date=(dateTime_interpreter(properties[i]["startTime"]))
+        hourTime.append(time)
+
     
-    return wind,hourNumber,hourlyTemp,hourlyIcons,hourTime
+    return wind,hourNumber,hourlyTemp,hourlyIcons,hourTime,date
 
 def photoDown(hourlyIcons):
     """
@@ -78,7 +80,9 @@ def jprint(obj):
 def dateTime_interpreter(Time:str):
     """
     Takes a date and time in YYYY-MM-DDTHH:MM:SS-HH:MM and converts it to a more readable date and time
+    returns time, date
     """
+    date = "Today is "+Time[5]+Time[6]+"/"+Time[8]+Time[9]+"/"+Time[0]+Time[1]+Time[2]+Time[3]
     tim = int(Time[11]+Time[12])
     output = ""
     if tim > 12:
@@ -91,4 +95,4 @@ def dateTime_interpreter(Time:str):
             output = str(tim) + "am"
 
     
-    return output
+    return output,date
