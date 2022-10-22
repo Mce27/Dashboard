@@ -13,7 +13,7 @@ def cli():
     dailyForecast = "uhhh"
     isDaytime = False
 
-    wind,hourNumber, hourlyTemp, hourlyIcons, hourTime = hourly_api_req(wind,hourNumber,hourlyTemp,hourlyIcons,hourTime)
+    wind,hourNumber,hourlyTemp,hourlyIcons,hourTime,date = hourly_api_req(wind,hourNumber,hourlyTemp,hourlyIcons,hourTime)
     dailyForecast, isDaytime = daily_api_req(dailyForecast,isDaytime)
     print("Daily Forecast: \n"+ dailyForecast+ "\n")
 
