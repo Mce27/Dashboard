@@ -7,33 +7,31 @@ import shutil
 def hourly_api_req():
     """
     This is the api request that is to be run hourly
-    Updates wind,hourNumber, hourlyTemp, and hourlyIcons
+    Returns a dictionary in the form of {number:[wind,temp,iconlink,time,date]}
     """
+    data = {}
+    
     response = requests.get("https://api.weather.gov/gridpoints/BUF/74,60/forecast/hourly")
     json = response.json()
     properties = json["properties"]["periods"]
 
-    wind = properties[0]["windSpeed"]
     """
     hourNumber.clear()
     hourlyTemp.clear()
     hourlyIcons.clear()
     hourTime.clear()
     """
-    hourNumber= []
-    hourlyTemp= []
-    hourlyIcons= []
-    hourTime= []
-    for i in range(0,5):
-        hour = properties[i]["number"]
-        hourNumber.append(hour)
-        hourlyTemp.append(properties[i]["temperature"])
-        hourlyIcons.append(properties[i]["icon"])
-        time,date=(dateTime_interpreter(properties[i]["startTime"]))
-        hourTime.append(time)
-
     
-    return wind,hourNumber,hourlyTemp,hourlyIcons,hourTime,date
+    for i in range(0,5):
+        hourList=[]
+        number =(properties[i]["number"])
+        hourList.append(properties[i]["windSpeed"])
+        hourList.append(properties[i]["temperature"])
+        hourList.append(properties[i]["icon"])
+        hourList.extend((dateTime_interpreter(properties[i]["startTime"])))
+        data.update({number:hourList})
+       #[wind,temp,iconpath,time,date]
+    return data
 
 def photoDown(hourlyIcons):
     """
