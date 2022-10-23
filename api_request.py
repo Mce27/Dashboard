@@ -3,8 +3,8 @@ import json
 import shutil
 
 
-
-def hourly_api_req(wind,hourNumber,hourlyTemp,hourlyIcons,hourTime):
+#wind,hourNumber,hourlyTemp,hourlyIcons,hourTime
+def hourly_api_req():
     """
     This is the api request that is to be run hourly
     Updates wind,hourNumber, hourlyTemp, and hourlyIcons
@@ -14,12 +14,16 @@ def hourly_api_req(wind,hourNumber,hourlyTemp,hourlyIcons,hourTime):
     properties = json["properties"]["periods"]
 
     wind = properties[0]["windSpeed"]
-
+    """
     hourNumber.clear()
     hourlyTemp.clear()
     hourlyIcons.clear()
     hourTime.clear()
-
+    """
+    hourNumber= []
+    hourlyTemp= []
+    hourlyIcons= []
+    hourTime= []
     for i in range(0,5):
         hour = properties[i]["number"]
         hourNumber.append(hour)
@@ -48,8 +52,8 @@ def photoDown(hourlyIcons):
         hourlyImgPath.append("./icons/"+str(i))
         i+=1
     return hourlyImgPath
-
-def daily_api_req(dailyForecast,isDaytime):
+#dailyForecast,isDaytime
+def daily_api_req():
     """
     This is the api request that is to be run (semi)daily
     Updates dailyForecast and isDaytime 
@@ -58,6 +62,8 @@ def daily_api_req(dailyForecast,isDaytime):
     json = response.json()
     properties = json["properties"]["periods"]
 
+    dailyForecast=[]
+    isDaytime=[]
     dailyForecast = properties[0]["detailedForecast"]
     isDaytime = properties[0]["isDaytime"]
     return dailyForecast,isDaytime
@@ -91,6 +97,8 @@ def dateTime_interpreter(Time:str):
     else:
         if tim == 12:
             output = str(tim) + "pm"
+        elif tim==0:
+            output = str(12) + "am"
         else:
             output = str(tim) + "am"
 
