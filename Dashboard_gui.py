@@ -32,10 +32,11 @@ ttk.Label(frm,textvariable=dailyForcastVar,font=Mfont).grid(column=0, row=1)
 
 
 hourTimelist = []
-hourlyImgList = []
+hourImgList = []
+hourTempList = []
 for i in range(0,HOURNUM):
-    hourlyImgList.append(ttk.Label(hourfrm,image=tkinter.PhotoImage("./icons/cry.png")))
-    
+    hourImgList.append(ttk.Label(hourfrm,image=tkinter.PhotoImage("./icons/cry.png")))
+    hourTempList.append(StringVar(hourfrm,value=str(0)))
     hourTimelist.append(StringVar(hourfrm,value=str(0)))
 
 """
@@ -61,16 +62,17 @@ def infoUpdate():
     global dailyForecast 
     global isDaytime
     global data
-    global hourlyImgList
+    global hourImgList
     data = hourly_api_req()
     hourlyImages = []
     for i in data.values():
         hourlyImages.append(i[2])
     hourlyImgPath = photoDown(hourlyImages)
-    for i in range(0,len(hourlyImgList)):
+    for i in range(0,len(hourImgList)):
         #hourlyImg.append(tkinter.PhotoImage(file=path))
         img = (ImageTk.PhotoImage((Image.open(hourlyImgPath[i])).resize(((56*3),(56*3)))))  # type: ignore
-        hourlyImgList[i].configure(image=img)
+        hourImgList[i].configure(image=img)
+        hourImgList[i].image = img  #VERY NEEDED
     #dailyForecast,isDaytime
     dailyForecast,isDaytime= daily_api_req()
     
@@ -89,9 +91,11 @@ def gui():
     dailyForcastVar.set(dailyForecast)
     for i in range(0,len(hourTimelist)):
         hourTimelist[i].set(data[i+1][3])
+        hourTempList[i].set((str(data[i+1][1]))+"°F")
         ttk.Label(hourfrm,textvariable= hourTimelist[i],font=Mfont).grid(column=i,row=1)
-        hourlyImgList[i].grid(column=i,row=2)
-        print(hourlyImgList[i].cget('image'))
+        ttk.Label(hourfrm,textvariable= hourTempList[i],font=Mfont).grid(column=i,row=3)
+        hourImgList[i].grid(column=i,row=2)
+        #print(hourImgList[i].cget('image'))
 
         
     
