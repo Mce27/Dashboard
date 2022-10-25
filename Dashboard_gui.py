@@ -34,10 +34,12 @@ ttk.Label(frm,textvariable=dailyForcastVar,font=Mfont).grid(column=0, row=1)
 hourTimelist = []
 hourImgList = []
 hourTempList = []
+hourWindList = [] 
 for i in range(0,HOURNUM):
     hourImgList.append(ttk.Label(hourfrm,image=tkinter.PhotoImage("./icons/cry.png")))
     hourTempList.append(StringVar(hourfrm,value=str(0)))
     hourTimelist.append(StringVar(hourfrm,value=str(0)))
+    hourWindList.append(StringVar(hourfrm,value=str(0)))
 
 """
 async def updateWeather():
@@ -92,8 +94,10 @@ def gui():
     for i in range(0,len(hourTimelist)):
         hourTimelist[i].set(data[i+1][3])
         hourTempList[i].set((str(data[i+1][1]))+"°F")
+        hourWindList[i].set(str(data[i+1][0]))
         ttk.Label(hourfrm,textvariable= hourTimelist[i],font=Mfont).grid(column=i,row=1)
         ttk.Label(hourfrm,textvariable= hourTempList[i],font=Mfont).grid(column=i,row=3)
+        ttk.Label(hourfrm,textvariable= hourWindList[i],font=Mfont).grid(column=i,row=4)
         hourImgList[i].grid(column=i,row=2)
         #print(hourImgList[i].cget('image'))
 
