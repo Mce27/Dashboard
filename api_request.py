@@ -1,7 +1,7 @@
 import requests
 import json
 import shutil
-
+HOURNUM=5
 
 #wind,hourNumber,hourlyTemp,hourlyIcons,hourTime
 def hourly_api_req():
@@ -22,7 +22,7 @@ def hourly_api_req():
     hourTime.clear()
     """
     
-    for i in range(0,5):
+    for i in range(0,HOURNUM):
         hourList=[]
         number =(properties[i]["number"])
         hourList.append(properties[i]["windSpeed"])
@@ -33,7 +33,7 @@ def hourly_api_req():
        #[wind,temp,iconpath,time,date]
     return data
 
-def photoDown(hourlyIcons):
+def photoDown(hourlyIcons:list):
     """
     Goes through the urls in the list and return a list with the image paths
     Downloads to local storage
