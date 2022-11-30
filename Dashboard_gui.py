@@ -2,6 +2,7 @@ from ast import Lambda
 from asyncio.windows_events import NULL
 from email.mime import image
 import queue
+import threading
 from tkinter import *
 from tkinter import ttk
 import tkinter
@@ -100,6 +101,16 @@ def infoUpdate():
     #dailyForecast,isDaytime
     dailyForecast,isDaytime= daily_api_req()
     
+async def test():
+    """
+    a test to figure out async
+    #TODO remove when finished
+    """
+    await asyncio.sleep(5)
+    global hourTimelist
+    for hour in hourTimelist:
+        hour.set(5)
+
 def gui():
     """
     A gui interface for the weather api
@@ -122,9 +133,13 @@ def gui():
 
         
     
-    
+    def start_loop():
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
+        loop.create_task(test())
+        loop.run_forever()
+    threading.Thread(target=start_loop).start()
 
-    #root.after(3000,lambda:hourTime0.set("6") )
     #starts the gui
     root.mainloop()
 
