@@ -41,24 +41,46 @@ for i in range(0,HOURNUM):
     hourTimelist.append(StringVar(hourfrm,value=str(0)))
     hourWindList.append(StringVar(hourfrm,value=str(0)))
 
-"""
 async def updateWeather():
-    while True:
-        wind,hourNumber,hourlyTemp,hourlyIcons,hourTime,date = await hourly_api_req()
-        hourlyImgPath = await photoDown(hourlyIcons)
-        dailyForecast,isDaytime = await daily_api_req()
-        print('weather obtained') 
-        gui_queue.put(lambda: updateWeatherGui(wind,hourNumber,hourlyTemp,hourlyIcons,hourTime,
-                                                date,hourlyImgPath,dailyForecast,isDaytime))
-        await asyncio.sleep(30)
-        
-def updateWeatherGui(wind1:str,hourNumber1:list,hourlyTemp1:list,hourlyIcons1:list,hourTime1:list,date1:str,hourlyImgPath1,dailyForecast1,isDaytime1):
-    
-    
+    global dailyForecast 
+    global isDaytime
+    global data
+    global hourImgList
+    data = hourly_api_req()
+    hourlyImages = []
+    for i in data.values():
+        hourlyImages.append(i[2])
+    hourlyImgPath = photoDown(hourlyImages)
+    for i in range(0,len(hourImgList)):
+        #hourlyImg.append(tkinter.PhotoImage(file=path))
+        img = (ImageTk.PhotoImage((Image.open(hourlyImgPath[i])).resize(((56*3),(56*3)))))  # type: ignore
+        hourImgList[i].configure(image=img)
+        hourImgList[i].image = img  #VERY NEEDED
+    #dailyForecast,isDaytime
+    dailyForecast,isDaytime= daily_api_req()
+    #hourlyImgPath = await photoDown(hour[])
+    #dailyForecast,isDaytime = await daily_api_req()
+    print('weather obtained') 
+    #gui_queue.put(lambda: 
+    updateWeatherGui(data,hourImgList,dailyForecast,isDaytime)
+    await asyncio.sleep(30)
+
+
+def updateWeatherGui(hour_data:dict,hourImgList1:list,dailyForcast1:str,isDaytme:bool):
+    """
+    updates the hourTimeList, hourTempList, hourWindList, dateVar, dailyForcastVar 
+    should update gui
+    """  
+    dateVar.set(hour_data[1][4])
+    dailyForcastVar.set(dailyForcast1)
+    for i in range(0,len(hourTimelist)):
+        hourTimelist[i].set(hour_data[i+1][3])
+        hourTempList[i].set((str(hour_data[i+1][1]))+"°F")
+        hourWindList[i].set(str(hour_data[i+1][0]))
     
     
     print('weather GUI refreshed')
-"""
+
 
 def infoUpdate():
     global dailyForecast 
@@ -78,9 +100,6 @@ def infoUpdate():
     #dailyForecast,isDaytime
     dailyForecast,isDaytime= daily_api_req()
     
-
-    
-
 def gui():
     """
     A gui interface for the weather api
