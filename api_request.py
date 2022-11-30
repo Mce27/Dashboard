@@ -1,7 +1,7 @@
 import requests
 import json
 import shutil
-HOURNUM=5
+HOURNUM=7
 
 #wind,hourNumber,hourlyTemp,hourlyIcons,hourTime
 def hourly_api_req():

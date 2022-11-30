@@ -108,8 +108,19 @@ async def test():
     """
     await asyncio.sleep(5)
     global hourTimelist
-    for hour in hourTimelist:
-        hour.set(5)
+    global hourImgList
+    global dateVar
+    global dailyForcastVar
+
+    img = (ImageTk.PhotoImage((Image.open("./icons/cry.png")).resize(((56*3),(56*3)))))# type: ignore
+    for i in range(0,len(hourTimelist)):
+        hourTimelist[i].set(5)
+        hourImgList[i].configure(image=img)
+        hourImgList[i].image=img
+    
+    dateVar.set("today")
+    dailyForcastVar.set("wimdy")
+
 
 def gui():
     """
