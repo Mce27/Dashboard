@@ -45,9 +45,9 @@ def photoDown(hourlyIcons:list):
         
         img.raw.decode_content = True
         
-        with open("./icons/"+str(i),'wb') as f:
+        with open("./icons/"+str(i)+".png",'wb') as f:
             shutil.copyfileobj(img.raw,f)
-        hourlyImgPath.append("./icons/"+str(i))
+        hourlyImgPath.append("./icons/"+str(i)+".png")
         i+=1
     return hourlyImgPath
 #dailyForecast,isDaytime
@@ -63,6 +63,14 @@ def daily_api_req():
     dailyForecast=[]
     isDaytime=[]
     dailyForecast = properties[0]["detailedForecast"]
+
+    forecastSplit = dailyForecast.split(" ")
+    if len(forecastSplit)>18:
+        num = len(forecastSplit)//18    #gives a whole number
+        for i in range(1,num+1):
+            forecastSplit[18*i] = forecastSplit[18*i]+"\n"
+        dailyForecast= " ".join(forecastSplit)
+
     isDaytime = properties[0]["isDaytime"]
     return dailyForecast,isDaytime
 
