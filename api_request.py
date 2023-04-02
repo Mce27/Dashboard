@@ -10,8 +10,8 @@ def hourly_api_req():
     Returns a dictionary in the form of {number:[wind,temp,iconlink,time,date]}
     """
     data = {}
-    
-    response = requests.get("https://api.weather.gov/gridpoints/BUF/74,60/forecast/hourly")
+    head={"Cache-Control": "no-cache","Pragma": "no-cache"} #python caches data without the header, not good for api calls
+    response = requests.get("https://api.weather.gov/gridpoints/BUF/74,60/forecast/hourly",headers=head)    
     json = response.json()
     properties = json["properties"]["periods"]
 
@@ -41,6 +41,10 @@ def photoDown(hourlyIcons:list):
     i = 0
     hourlyImgPath = []
     for url in hourlyIcons:
+        fix = url.find(",0")    #the api changed and now the icons dont work the same. this fixes it
+        if fix != -1:
+            url = url[:fix] + url[fix+2:]
+
         img = requests.get(url,stream=True)
         
         img.raw.decode_content = True
