@@ -10,9 +10,9 @@ def cli():
     print("Daily Forecast: \n"+ dailyForecast+ "\n")
 
     for n in data:
-        print("Hour: "+ str(data[n][3])+ "\n")
-        print("Temp: "+ str(data[n][1])+ "\n")
-        print("Wind: "+str(data[n][0])+"\n\n")
+        print("Hour: "+ str(data[n][3]))
+        print("Temp: "+ str(data[n][1]))
+        print("Wind: "+str(data[n][0])+"\n")
     
     
         
