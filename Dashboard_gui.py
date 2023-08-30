@@ -75,6 +75,12 @@ def updateWeatherGui(hour_data:dict,hourImgList1:list,dailyForcast1:str,isDaytme
     updates the hourTimeList, hourTempList, hourWindList, dateVar, dailyForcastVar 
     should update gui
     """  
+    global dateVar
+    global dailyForcastVar
+    global hourTimelist
+    global hourTempList
+    global hourWindList
+
     dateVar.set(hour_data[1][4])
     dailyForcastVar.set(dailyForcast1)
     for i in range(0,len(hourTimelist)):
@@ -82,7 +88,7 @@ def updateWeatherGui(hour_data:dict,hourImgList1:list,dailyForcast1:str,isDaytme
         hourTempList[i].set((str(hour_data[i+1][1]))+"°F")
         hourWindList[i].set(str(hour_data[i+1][0]))
     
-    
+    print(hour_data[1][3])
     print('weather GUI refreshed')
 
 
